@@ -1,0 +1,29 @@
+{
+  "cloud_modified_time": "2026-10-08T14:11:36.461Z",
+  "cloud_package_sha256": "b1fce842166e1aab294b4d66486f51a731cc78dc223bb57a10ad2e63a9ab20c5",
+  "files": {
+    "historical_quadrature_nll.csv": {
+      "source": "data/raw/emp/quadrature_nll.csv",
+      "source_sha256": "d5517eb37b00bc8a3f2bc881afe23cf8ee217dbd133336601b19d1829fd32795",
+      "selection": {
+        "what": [
+          "old_panel_old_M1_params"
+        ]
+      },
+      "rows": 7,
+      "numeric_strings_preserved": true
+    },
+    "historical_quadrature_fits.csv": {
+      "source": "data/raw/emp/quadrature_fits.csv",
+      "source_sha256": "fa95af8dbf7ae5e9d956c8774d251729c883c64f18715f46ee744151099780e0",
+      "selection": {
+        "subset": [
+          "oldpanel_Q160",
+          "oldpanel_Q24"
+        ]
+      },
+      "rows": 2,
+      "numeric_strings_preserved": true
+    }
+  }
+}

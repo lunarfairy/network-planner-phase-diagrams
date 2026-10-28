@@ -1,0 +1,6 @@
+# Simulation/estimation versions recorded in the cloud archive; Python 3.11.10.
+# Use a separate environment from requirements-analysis.txt.
+numpy==1.26.3
+scipy==1.15.3
+pandas==2.1.4
+numba==0.65.1
