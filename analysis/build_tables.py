@@ -61,6 +61,7 @@ cpts = pd.DataFrame(json.load(open(os.path.join(RAW, 'cert', 'cert_points.json')
 cpts['T'] = cpts['T'].fillna(15).astype(int)
 Tmap = dict(zip(cpts.pid, cpts['T']))
 rows = []
+raw_winner_dE_drop = []
 for pid, d in cert.groupby('pid'):
     T = Tmap[pid]
     out = dict(pid=pid)
@@ -79,6 +80,9 @@ for pid, d in cert.groupby('pid'):
         out['lockB_' + k] = v
     fA = dA[dA.planner == 'family']
     fB = dB[dB.planner == 'family'].set_index(['s', 'k'])
+    raw_A = fA[(fA.s == out['A_raw_s']) & (fA.k == out['A_raw_k'])].iloc[0]
+    raw_B = fB.loc[(out['A_raw_s'], out['A_raw_k'])]
+    raw_winner_dE_drop.append(float(raw_A.dE_fin - raw_B.dE_fin))
     ic = fA.cap.idxmax(); sc, kc = int(fA.loc[ic, 's']), int(fA.loc[ic, 'k'])
     out.update(cap_s=sc, cap_k=kc, lockB_fin_capwin=float(fB.loc[(sc, kc), 'fin']),
                lockB_fin_coopwin=float(fB.loc[(out['A_s_star'], out['A_k_star']), 'fin']))
@@ -104,7 +108,7 @@ for p in ('E', 'S', 'C'):
 num('agree_AB_kw', (kw.A_phase == kw.B_phase).mean(), 3); num('agree_AB_all', (PH.A_phase == PH.B_phase).mean(), 3)
 num('n_AB_disagree_kw', (kw.A_phase != kw.B_phase).sum(), 0)
 num('uncertain_kw', kw.uncertain.sum(), 0); num('uncertain_all', PH.uncertain.sum(), 0)
-sb = PH.A_dE - PH.lockB_dE_fin
+sb = pd.Series(raw_winner_dE_drop)
 num('selbias_dE_mean', sb.mean(), 5); num('selbias_dE_sd', sb.std(), 5)
 num('selbias_dC_mean', (PH.A_dC - PH.lockB_dC_fin).mean(), 5)
 rc = kw.AB_raw_cls.value_counts()

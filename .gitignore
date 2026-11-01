@@ -4,10 +4,8 @@ __pycache__/
 *.nbi
 .venv/
 .env
-data/processed/
 figures/
 generated_tables/
-Source_Data.xlsx
 out_*/
 8ahkg-osfstorage-archive.zip
 fits_old.csv

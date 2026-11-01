@@ -1,5 +1,5 @@
 import re
-"""Write the LaTeX tables (main Table 1 and Supplementary Tables 1-14) from the processed tables.
+"""Write the LaTeX tables (main Table 1 and Supplementary Tables 1-9) from the processed tables.
 
 Usage: python analysis/make_tables.py <processed_dir> <raw_dir> <latex_dir>
 """
@@ -229,5 +229,10 @@ _si = '\n'.join('\n'.join(TABS[k]) for k in ORDER_T)
 _si = re.sub(r'(\\begin\{tabular\})', r'\\begin{adjustbox}{max width=\\textwidth}\1', _si)
 _si = _si.replace('\\end{tabular}', '\\end{tabular}\\end{adjustbox}')
 _si = re.sub(r'(?<![\d.])-(0\.0+)(?![\d])', r'\1', _si)   # no negative zeros
-open(os.path.join(OUT, 'si_tables.tex'), 'w', encoding='utf-8').write(_si)
+from compact_si_tables import compact_si_tables
+_compact_si = compact_si_tables(_si)
+open(os.path.join(OUT, 'si_tables.tex'), 'w', encoding='utf-8').write(_compact_si)
+for _index, _block in enumerate(re.findall(r'\\begin\{table\}.*?\\end\{table\}', _compact_si, re.S), 1):
+    _block = re.sub(r'\\begin\{table\}\[[^]]+\]', r'\\begin{table}[!htbp]', _block, count=1)
+    open(os.path.join(OUT, f'si_table{_index}.tex'), 'w', encoding='utf-8').write(_block + '\n')
 print('tables written')
