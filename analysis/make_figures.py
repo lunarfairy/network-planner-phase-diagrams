@@ -64,7 +64,7 @@ def fig1():
     ax = axs[0, 0]
     phase_mesh(ax, kw, 'kappa', 'w')
     ax.plot([1.0], [0.0], marker='*', ms=9, mfc='white', mec='k', mew=0.8, clip_on=False, zorder=6)
-    ax.annotate('published\nsimulator', xy=(1.0, 0.0), xytext=(0.25, 0.13), fontsize=6, color='white', arrowprops=dict(arrowstyle='-', lw=0.5, color='white'))
+    ax.annotate('$\\kappa=1$, $w=0$', xy=(1.0, 0.0), xytext=(0.25, 0.13), fontsize=6, color='white', arrowprops=dict(arrowstyle='-', lw=0.5, color='white'))
     ax.set_xlabel('Defector responsiveness $\\kappa$'); ax.set_ylabel('Payoff-imitation share $w$')
     ax.set_title('Simplest near-best rule class (dots: uncertain)', loc='left')
     h = [mpl.patches.Patch(color=PCOL[k], label=PNAME[k]) for k in ('E', 'S', 'C')] + [mpl.patches.Patch(color=PCOL['P'], label='Probation (any history rule)')]
@@ -126,7 +126,7 @@ def fig2():
     ax.set_xlabel('First-order prediction $M_{14}$'); ax.set_ylabel('Simulated effect of the last\nconciliation step ($s=14$ vs $13$)')
     ax.set_title('Summed single-tie effects approximate the end-game decision', loc='left')
     panel_letter(ax, 'a')
-    specs = [('orig_k0.8', 'published coefficients, $\\kappa$=0.8', '#E69F00', '-'), ('orig_k1.0', 'published coefficients, $\\kappa$=1.0', '#009E73', '-'),
+    specs = [('orig_k0.8', '$\\kappa$=0.8', '#E69F00', '-'), ('orig_k1.0', '$\\kappa$=1.0', '#009E73', '-'),
              ('emp_M1w', 're-estimated, $\\hat\\kappa$', '#7B3294', '-'), ('emp_M1w_k1.0', 're-estimated, $\\kappa$=1', '#7B3294', ':'),
              ('emp_M1w_nocap', 're-estimated, no capital limit', '#7B3294', '--')]
     ax = axs[0, 1]
@@ -148,7 +148,7 @@ def fig2():
     ax.set_title('Final-round effect of the same step (matched branches)', loc='left')
     panel_letter(ax, 'c')
     ax = axs[1, 1]
-    labs = [('orig_k0.8', 'published,\n$\\kappa$=0.8'), ('orig_k1.0', 'published,\n$\\kappa$=1.0'), ('emp_M1w', 're-estimated,\n$\\hat\\kappa$'),
+    labs = [('orig_k0.8', '$\\kappa$=0.8'), ('orig_k1.0', '$\\kappa$=1.0'), ('emp_M1w', 're-estimated,\n$\\hat\\kappa$'),
             ('emp_M1w_k1.0', 're-estimated,\n$\\kappa$=1')]
     x = np.arange(len(labs)); wdt = 0.2
     for j, (col, name, c) in enumerate((('immD', 'round-$s$ defectors, round $s$+1', '#7B3294'), ('immC', 'round-$s$ cooperators, round $s$+1', '#BDBDBD'),
@@ -250,7 +250,7 @@ def fig5():
     ax.errorbar(kc.est, y, xerr=[kc.est - kc.lo, kc.hi - kc.est], fmt='o', ms=3.5, color='#7B3294', capsize=1.5, lw=0.9)
     pk = est[(est.model == 'M1') & (est.param == 'kappa')].iloc[0]
     ax.axvspan(pk.lo, pk.hi, color='#7B3294', alpha=0.15, lw=0); ax.axvline(pk.est, color='#7B3294', lw=0.8)
-    ax.axvline(1.0, color=GREY, lw=0.8, ls='--'); ax.text(1.005, y[0] - 0.35, 'published\nsimulator', fontsize=5.5, color=GREY, va='top')
+    ax.axvline(1.0, color=GREY, lw=0.8, ls='--'); ax.text(1.005, y[0] - 0.35, '$\\kappa=1$', fontsize=5.5, color=GREY, va='top')
     ax.set_yticks(y); ax.set_yticklabels([CLAB[c] for c in ORDER], fontsize=6)
     ax.set_xlabel('Defector responsiveness $\\kappa$ (95% group-bootstrap interval)')
     ax.set_title('Responsiveness by condition (band: pooled $\\hat\\kappa$)', loc='left', fontsize=7)
@@ -264,7 +264,7 @@ def fig5():
     from matplotlib.lines import Line2D
     hh = [Line2D([], [], color=PCOL['C'], label='$\\Delta_C$ (vs conciliation throughout)'), Line2D([], [], color=PCOL['E'], label='$\\Delta_E$ (vs exclusion)'),
           Line2D([], [], color='k', ls='-', label='re-estimated M1 ($\\hat w=0$)'), Line2D([], [], color='k', ls='--', label='re-estimated M3 (round trend)'),
-          Line2D([], [], color=GREY, lw=0.8, label='$\\Delta_C$ with published coefficients')]
+          Line2D([], [], color=GREY, lw=0.8, label='$\\Delta_C$ (Table 1 settings)')]
     ax.axhline(EPS, color=GREY, ls=':', lw=0.6)
     ax.set_yscale('symlog', linthresh=0.01); ax.set_ylim(-0.0005, 2.0)
     ax.set_xlabel('$\\kappa$ (other parameters fixed)'); ax.set_ylabel('Gain of best rule')
@@ -272,18 +272,18 @@ def fig5():
     ax.legend(handles=hh, fontsize=5, loc='upper right', ncol=2, columnspacing=0.8, handlelength=1.6)
     panel_letter(ax, 'b')
     ax = fig.add_subplot(gs[1, 0])
-    items = [('decomp_SI', 'published simulator'),
-             ('decomp_SI_plus_kappa', 'published + re-estimated $\\kappa$'),
-             ('decomp_SI_plus_sigma', 'published + re-estimated $\\sigma_\\theta$'),
-             ('decomp_SI_plus_slopes', 'published + re-est. $\\beta_0,\\beta_s,\\beta_n,\\beta_r$'),
-             ('decomp2_SI_plus_b_s', 'published + re-estimated $\\beta_s$'),
-             ('decomp2_SI_plus_b_n', 'published + re-estimated $\\beta_n$'),
-             ('decomp2_SI_plus_b_r', 'published + re-estimated $\\beta_r$'),
-             ('decomp_EMP_minus_kappa', 're-estimated, published $\\kappa$'),
-             ('decomp_EMP_minus_sigma', 're-estimated, published $\\sigma_\\theta$'),
-             ('decomp_EMP_minus_slopes', 're-est., published $\\beta_0,\\beta_s,\\beta_n,\\beta_r$'),
-             ('decomp2_EMP_minus_b_int_s_n', 're-est., published $\\beta_0,\\beta_s,\\beta_n$'),
-             ('decomp2_EMP_minus_b_r', 're-estimated, published $\\beta_r$')]
+    items = [('decomp_SI', 'Table 1 settings'),
+             ('decomp_SI_plus_kappa', '$\\kappa:1\\to0.891$'),
+             ('decomp_SI_plus_sigma', '$\\sigma_\\theta:2.41\\to3.663$'),
+             ('decomp_SI_plus_slopes', '$(\\beta_0,\\beta_s,\\beta_n,\\beta_r)$: settings $\\to$ estimates'),
+             ('decomp2_SI_plus_b_s', '$\\beta_s:-0.193\\to-0.255$'),
+             ('decomp2_SI_plus_b_n', '$\\beta_n:0.370\\to0.194$'),
+             ('decomp2_SI_plus_b_r', '$\\beta_r:1.521\\to4.000$'),
+             ('decomp_EMP_minus_kappa', '$\\kappa:0.891\\to1$'),
+             ('decomp_EMP_minus_sigma', '$\\sigma_\\theta:3.663\\to2.41$'),
+             ('decomp_EMP_minus_slopes', '$(\\beta_0,\\beta_s,\\beta_n,\\beta_r)$: estimates $\\to$ settings'),
+             ('decomp2_EMP_minus_b_int_s_n', '$(\\beta_0,\\beta_s,\\beta_n)$: estimates $\\to$ settings'),
+             ('decomp2_EMP_minus_b_r', '$\\beta_r:4.000\\to1.521$')]
     yv = np.arange(len(items))[::-1]
     for yi, (lab, name) in zip(yv, items):
         g = dec[dec.label == lab]; dC = g.dC.mean(); ph = g.phase.iloc[0] if g.phase.iloc[0] in PCOL else 'P'
@@ -309,7 +309,7 @@ def fig5():
     ax = fig.add_subplot(gs[2, :])
     x = np.arange(len(ORDER))
     ax.errorbar(x, oos.obs, yerr=2 * oos.obs_se, fmt='s', color='k', ms=4, capsize=2, lw=0.9, label='observed (groups, $\\pm$2 s.e.)')
-    ax.plot(x - 0.15, oos.SI, 'v', color=GREY, ms=5, label='published simulator')
+    ax.plot(x - 0.15, oos.SI, 'v', color=GREY, ms=5, label='Table 1 settings')
     ax.errorbar(x + 0.15, oos.loco_M3, yerr=[oos.loco_M3 - oos.loco_M3_lo, oos.loco_M3_hi - oos.loco_M3], fmt='o', color='#7B3294', ms=4,
                 capsize=2, lw=0.9, label='re-estimated, condition held out (M3; 95% bootstrap)')
     ax.set_xticks(x); ax.set_xticklabels([CLAB[c] for c in ORDER], fontsize=6.5)

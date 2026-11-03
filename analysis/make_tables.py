@@ -1,5 +1,5 @@
 import re
-"""Write the LaTeX tables (main Table 1 and Supplementary Tables 1-9) from the processed tables.
+"""Write the LaTeX tables (main Table 1 and Supplementary Tables 1-8) from the processed tables.
 
 Usage: python analysis/make_tables.py <processed_dir> <raw_dir> <latex_dir>
 """
@@ -53,7 +53,7 @@ tests = [('Round trend (M3 vs M1), LR, 1 d.f.', f"{N['LR_trend']:.1f}", pval(N['
          ('Condition $\\kap^{(c)}$ (M1c vs M1i), LR, 6 d.f.', f"{N['LR_kappa_c']:.1f}", pval(N['LRp_kappa_c'])),
          ('Condition intercepts, group-bootstrap Wald, 6 d.f.', f"{N['Wald_int']:.1f}", pval(N['Waldp_int'])),
          ('Condition $\\kap^{(c)}$, group-bootstrap Wald, 6 d.f.', f"{N['Wald_kappa_c']:.1f}", pval(N['Waldp_kappa_c']))]
-t = ['\\begin{tabular}{lll}', '\\toprule', 'Parameter & Published simulator & Re-estimated (pooled)\\\\', '\\midrule']
+t = ['\\begin{tabular}{lll}', '\\toprule', 'Parameter & Parameter settings & Re-estimated (pooled)\\\\', '\\midrule']
 t += [f'{a} & {b} & {c}\\\\' for a, b, c in rows]
 t += ['\\midrule', 'Test & Statistic & $P$\\\\', '\\midrule'] + [f'{a} & {b} & {c}\\\\' for a, b, c in tests]
 t += ['\\bottomrule', '\\end{tabular}']
@@ -119,7 +119,7 @@ for w, g in e.groupby('w'):
     err = (g.M_total - g.sim_end_diff).abs()
     body.append(f"{w:g} & {len(g)} & {int((np.sign(g.M_total) == np.sign(g.sim_end_diff)).sum())} & {err.mean():.4f} & {err.max():.4f} & {np.corrcoef(g.M_total, g.sim_end_diff)[0, 1]:.3f}")
 body.append(f"All & {N['th_n']} & {N['th_sign_agree']} & {N['th_mae_all']:.4f} & {N['th_max_err']:.4f} & {N['th_corr']:.3f}")
-table('stab:theory', 'Accuracy of the summed single-tie value $M_{14}$ against the simulated effect of the last conciliation step (40,000 paired games per point). Near the boundary (29 points with $|$effect$|<0.02$) the mean absolute error is ' + f"{N['th_mae_near']:.4f}.",
+table('stab:theory', 'Accuracy of the summed single-tie value $M_{14}$ against the simulated effect of the last conciliation step (40,000 paired games per point).',
       '$w$ & Points & Same sign & Mean abs. error & Max. abs. error & Correlation', body, 'rrrrrr')
 M = pd.read_csv(os.path.join(P, 'mechanism_branches.csv'))
 LAB = {'orig_k0.6': 'published, $\\kap=0.6$', 'orig_k0.8': 'published, $\\kap=0.8$', 'orig_k0.8_nocap': 'published, $\\kap=0.8$, no capital limit',

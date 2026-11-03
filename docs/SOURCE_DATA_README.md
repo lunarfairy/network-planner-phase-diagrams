@@ -2,9 +2,9 @@
 
 `Source_Data.xlsx` contains 25 sheets: README plus 24 data sheets. The workbook and its numerical values are preserved from the current manuscript package.
 
-The first row of each data sheet contains the field names. `source_data_fields.csv` lists every sheet, source CSV and field in column order. Complete field construction and statistical definitions are in `analysis/build_tables.py`; workbook selections are in `analysis/make_source_data.py`, both in this repository. The manuscript Methods and figure captions define the scientific quantities and reported uncertainties. Blank cells remain blank as in the supplied data.
+The first row of each data sheet contains the field names. `source_data_fields.csv` lists every sheet, source CSV and field in column order. Complete field construction and statistical definitions are in `analysis/build_tables.py`; workbook selections are in `analysis/make_source_data.py`, both inside the accompanying Supplementary Software. The manuscript Methods and figure captions define the scientific quantities and reported uncertainties. Blank cells remain blank as in the supplied data.
 
-The source paths below are relative to the repository root. Archived sheets preserve comparisons that are available as underlying data but are not additional SI display items.
+The source paths below are relative to the Supplementary Software root. Archived sheets preserve comparisons that are available as underlying data but are not additional SI display items.
 
 | Sheet | Rows | Source under data/processed/ |
 |---|---:|---|
