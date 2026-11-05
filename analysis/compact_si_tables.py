@@ -25,7 +25,7 @@ def compact_si_tables(full):
         c=[x.strip() for x in row.split('&')]
         flow.append(' & '.join(c[i] for i in (0,1,2,4,5,6,7)))
     blocks['flow']=_table('flow',
-        'Sample flow by condition. Bot, node-rounds controlled by replacement bots; human, recorded human decisions; capital, decisions excluded because the capital constraint forced defection; analysed, retained human decisions. Full node-round counts, coding sensitivities and outcomes over all 16 nodes are in '+r'\texttt{data/processed/sample\_flow.csv}.',
+        'Sample flow by condition. Bot, node-rounds controlled by replacement bots; human, recorded human decisions; capital, decisions excluded because the capital constraint forced defection; analysed, retained human decisions.',
         'Condition & Groups & Players & Bot & Human & Capital & Analysed',flow,'lrrrrrr')
     quad=[]
     for row in _rows(blocks['quad']):
@@ -56,7 +56,7 @@ def compact_si_tables(full):
     blocks['place']=_table('place',
         r'Placement of empirical parameter vectors under the final-round objective. Class agrees between samples A and B in every row. Both select the same $s^\star$, so sample-B gains also evaluate the locked sample-A choice. Gains are labelled by sample.',
         r'Parameter vector & Class A/B & $s^\star$ & $\Delta_E$ (B) & $\Delta_C$ (A)',place,'llrrr')
-    rewardcap=(r'Alternative objectives on the main plane (208 points) and at the re-estimated population. The sample-A argmax is evaluated on B. Winner C counts conciliation-throughout winners; loss is final-round cooperation lost relative to the final-round winner. The last two columns give the winning rule $(s,\ell)$ and loss. Discounted objectives use $\gamma=0.99$ and a rejection weight $P=0$ or 1. The penalty counts rejected recommendations per possible pair at each planner step, with the same discount. Rejection is recorded for the single shown endpoint; the original training reward in ref.~17 counts rejection by both endpoints. These four alternatives accompany the primary final-round objective.')
+    rewardcap=(r'Alternative objectives on the main plane (208 points) and at the re-estimated population. The sample-A argmax is evaluated on B. Winner C counts conciliation-throughout winners; loss is final-round cooperation lost relative to the final-round winner. The last two columns give the winning rule $(s,\ell)$ and loss. Discounted objectives use $\gamma=0.99$ and a rejection weight $P=0$ or 1. The penalty counts rejected recommendations per possible pair at each planner step, with the same discount. Rejection is recorded for the single shown endpoint; the original training reward in ref.~19 counts rejection by both endpoints. These four alternatives accompany the primary final-round objective.')
     blocks['reward']=re.sub(r'\\caption\{.*?\}\\label',lambda m:r'\caption{'+rewardcap+r'}\label',blocks['reward'],count=1,flags=re.S)
     oos=[]
     for row in _rows(blocks['oos']):
